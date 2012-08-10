@@ -1,0 +1,7 @@
+**/target/
+**/TODO
+**/diagramly.crx
+**/war/WEB-INF/client_secrets.json
+**/war/WEB-INF/iconfinder_key
+**/war/WEB-INF/classes/
+**/war/js/diagramly.min.js

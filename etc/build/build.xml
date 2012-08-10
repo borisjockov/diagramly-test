@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project basedir="." default="compile">
+	<property name="local.repo.name" value="diagramly-test"/>
+	<property name="github.repo" value="git@github.com:borisjockov/${local.repo.name}.git" />
+
+	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${basedir}/../../../mxgraph/etc/build/compiler.jar" />
+	<target name="compile">
+		<jscomp compilationLevel="simple" debug="false" output="${basedir}/../../war/js/diagramly.min.js">
+			<sources dir="${basedir}">
+				<file name="mxClient.js" />
+			</sources>
+			<sources dir="${basedir}/../../../mxgraph/javascript/examples/grapheditor/www/js">
+				<file name="Editor.js" />
+				<file name="Graph.js" />
+				<file name="Shapes.js" />
+				<file name="EditorUi.js" />
+				<file name="Actions.js" />
+				<file name="Menus.js" />
+				<file name="Sidebar.js" />
+				<file name="Toolbar.js" />
+				<file name="Dialogs.js" />
+			</sources>
+			<sources dir="${basedir}/../../war/js/diagramly">
+				<file name="Dialogs.js" />
+				<file name="Sharing.js" />
+				<file name="Diagramly.js" />
+			</sources>
+			<sources dir="${basedir}/../../war/js/sharejs">
+				<file name="socket.io.js" />
+				<file name="share.uncompressed.js" />
+				<file name="json.uncompressed.js" />
+			</sources>
+		</jscomp>
+	</target>
+
+	<target name="git-deploy">
+		<!-- <mkdir dir="../../../${staging.dir}" /> -->
+		
+		
+		<exec executable="git" dir="../../../">
+			<arg value="clone" />
+			<arg value="${github.repo}" />
+		</exec>
+		
+		<copy todir="../../../${local.repo.name}">
+					<fileset dir="../../../diagramly_gae">
+						<excludesfile name="github.excludes" />
+					</fileset>
+				</copy>
+		
+		<exec executable="git" dir="../../../${local.repo.name}">
+			<arg value="add" />
+			<arg value="." />
+		</exec>
+		
+		<exec executable="git" dir="../../../${local.repo.name}">
+					<arg value="commit" />
+					<arg value="-m" />
+					<arg value='"auto commited"' />
+				</exec>
+
+		<exec executable="git" dir="../../../${local.repo.name}">
+			<arg value="push" />
+			<arg value="origin" />
+			<arg value="master" />
+		</exec> 
+
+		<!-- <delete dir="${staging.dir}" includeemptydirs="true"/> -->
+	</target>
+</project>
