@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <project basedir="." default="compile">
+	<!-- ===========================Instructions ==================================== -->
+	<!-- Before running the 'git-deploy' task make sure you run 'ssh git@github.com'  -->
+	<!-- This is because ant cannot prompt user to answer whether or not to add the   -->
+	<!-- host to the list of known hosts. Not doing so would lock up the task for     -->
+	<!-- all eternity! <evil laugher in the background>                               -->
 	
 	<!-- ========================== Project Environment ============================= -->
 
@@ -150,6 +155,6 @@
 			<arg value="--tags" />
 		</exec>
 
-		<!--<delete dir="${local.repo}" includeemptydirs="true" />-->
+		<delete dir="${local.repo}" includeemptydirs="true" />
 	</target>
 </project>
